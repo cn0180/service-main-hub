@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SchoonmaakRouteImport } from './routes/schoonmaak'
 import { Route as LinkmeRouteImport } from './routes/linkme'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as BuitenonderhoudRouteImport } from './routes/buitenonderhoud'
 import { Route as IndexRouteImport } from './routes/index'
 
 const SchoonmaakRoute = SchoonmaakRouteImport.update({
@@ -29,6 +30,11 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BuitenonderhoudRoute = BuitenonderhoudRouteImport.update({
+  id: '/buitenonderhoud',
+  path: '/buitenonderhoud',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,12 +43,14 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/buitenonderhoud': typeof BuitenonderhoudRoute
   '/contact': typeof ContactRoute
   '/linkme': typeof LinkmeRoute
   '/schoonmaak': typeof SchoonmaakRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/buitenonderhoud': typeof BuitenonderhoudRoute
   '/contact': typeof ContactRoute
   '/linkme': typeof LinkmeRoute
   '/schoonmaak': typeof SchoonmaakRoute
@@ -50,20 +58,28 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/buitenonderhoud': typeof BuitenonderhoudRoute
   '/contact': typeof ContactRoute
   '/linkme': typeof LinkmeRoute
   '/schoonmaak': typeof SchoonmaakRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/contact' | '/linkme' | '/schoonmaak'
+  fullPaths: '/' | '/buitenonderhoud' | '/contact' | '/linkme' | '/schoonmaak'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/contact' | '/linkme' | '/schoonmaak'
-  id: '__root__' | '/' | '/contact' | '/linkme' | '/schoonmaak'
+  to: '/' | '/buitenonderhoud' | '/contact' | '/linkme' | '/schoonmaak'
+  id:
+    | '__root__'
+    | '/'
+    | '/buitenonderhoud'
+    | '/contact'
+    | '/linkme'
+    | '/schoonmaak'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BuitenonderhoudRoute: typeof BuitenonderhoudRoute
   ContactRoute: typeof ContactRoute
   LinkmeRoute: typeof LinkmeRoute
   SchoonmaakRoute: typeof SchoonmaakRoute
@@ -92,6 +108,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/buitenonderhoud': {
+      id: '/buitenonderhoud'
+      path: '/buitenonderhoud'
+      fullPath: '/buitenonderhoud'
+      preLoaderRoute: typeof BuitenonderhoudRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -104,6 +127,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BuitenonderhoudRoute: BuitenonderhoudRoute,
   ContactRoute: ContactRoute,
   LinkmeRoute: LinkmeRoute,
   SchoonmaakRoute: SchoonmaakRoute,

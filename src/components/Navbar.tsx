@@ -53,14 +53,13 @@ const translations: Record<string, Record<string, string>> = {
   },
 };
 
-const navItems = ["Home", "Schoonmaak", "Buitenonderhoud", "Vastgoeddiensten", "Contact"] as const;
-const navTargets = {
-  Home: "/",
-  Schoonmaak: "/schoonmaak",
-  Buitenonderhoud: "/#buitenonderhoud",
-  Vastgoeddiensten: "/#vastgoeddiensten",
-  Contact: "/contact",
-} as const;
+const navItems = [
+  { name: "Home", to: "/" as const },
+  { name: "Schoonmaak", to: "/schoonmaak" as const },
+  { name: "Buitenonderhoud", to: "/buitenonderhoud" as const },
+  { name: "Vastgoeddiensten", to: "/" as const, hash: "vastgoeddiensten" },
+  { name: "Contact", to: "/contact" as const },
+] as const;
 const languages = [
   { code: "nl", label: "Nederlands" },
   { code: "de", label: "Deutsch" },
@@ -97,6 +96,7 @@ export default function Navbar() {
   const isActive = (name: string) => {
     if (name === "Home") return location.pathname === "/";
     if (name === "Schoonmaak") return location.pathname.startsWith("/schoonmaak");
+    if (name === "Buitenonderhoud") return location.pathname.startsWith("/buitenonderhoud");
     if (name === "Contact") return location.pathname === "/contact";
     return false;
   };
@@ -135,7 +135,7 @@ export default function Navbar() {
           >
           {/* Logo */}
           <div style={{ display: "flex", alignItems: "center", justifySelf: "start" }}>
-            <Link to="/">
+            <Link to="/" viewTransition={location.pathname !== "/"}>
               <img
                 src="/images/logo.png"
                 alt="NordAnker Hausmeister- & Reinigungsservice"
@@ -163,9 +163,8 @@ export default function Navbar() {
               justifySelf: "center",
             }}
           >
-            {navItems.map((name, idx) => {
-              const active = isActive(name);
-              const href = navTargets[name];
+            {navItems.map((item, idx) => {
+              const active = isActive(item.name);
               const commonStyle = {
                 textDecoration: "none",
                 color: active ? "#4a8c3f" : "#1e3a5f",
@@ -177,9 +176,15 @@ export default function Navbar() {
                 padding: "8px 0",
               };
 
-              const navElement = href.startsWith("/#") ? (
-                <a key={name} href={href} style={commonStyle}>
-                  {t(name)}
+              const navElement = item.hash ? (
+                <Link
+                  key={item.name}
+                  to="/"
+                  hash={item.hash}
+                  viewTransition={location.pathname !== "/"}
+                  style={commonStyle}
+                >
+                  {t(item.name)}
                   <div
                     style={{
                       position: "absolute",
@@ -193,14 +198,15 @@ export default function Navbar() {
                       transition: "width 0.35s ease",
                     }}
                   />
-                </a>
+                </Link>
               ) : (
                 <Link
-                  key={name}
-                  to={href as "/" | "/contact" | "/schoonmaak"}
+                  key={item.name}
+                  to={item.to}
+                  viewTransition={location.pathname !== item.to}
                   style={commonStyle}
                 >
-                  {t(name)}
+                  {t(item.name)}
                   <div
                     style={{
                       position: "absolute",
@@ -218,7 +224,7 @@ export default function Navbar() {
               );
 
               return (
-                <div key={name} style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+                <div key={item.name} style={{ display: "flex", alignItems: "center", gap: "24px" }}>
                   {idx > 0 && <NavLine />}
                   {navElement}
                 </div>

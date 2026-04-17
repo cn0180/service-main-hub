@@ -1,7 +1,61 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { Building2, Trees, Wrench } from "lucide-react";
+import {
+  BrushCleaning,
+  Building2,
+  ClipboardCheck,
+  Hammer,
+  ScanSearch,
+  Snowflake,
+  Sparkles,
+  SprayCan,
+  Trees,
+  WandSparkles,
+  Wrench,
+} from "lucide-react";
 import Navbar from "@/components/Navbar";
 import SiteFooter from "@/components/SiteFooter";
+
+const serviceItems = [
+  { group: "Schoonmaak", title: "Gebouwenreiniging", Icon: Building2 },
+  { group: "Schoonmaak", title: "Basis-/regelmatige schoonmaak", Icon: Sparkles },
+  { group: "Schoonmaak", title: "Trappenhuisreiniging", Icon: BrushCleaning },
+  { group: "Schoonmaak", title: "Ramenreiniging", Icon: ScanSearch },
+  { group: "Schoonmaak", title: "Hogedrukreiniging", Icon: SprayCan },
+  { group: "Schoonmaak", title: "Graffiti verwijdering", Icon: WandSparkles },
+  { group: "Buitenonderhoud", title: "Tuinonderhoud", Icon: Trees, id: "buitenonderhoud" },
+  { group: "Buitenonderhoud", title: "Boomverzorging", Icon: Trees },
+  { group: "Buitenonderhoud", title: "Winterdiensten", Icon: Snowflake },
+  { group: "Vastgoeddiensten", title: "Kleine reparaties", Icon: Hammer, id: "vastgoeddiensten" },
+  { group: "Vastgoeddiensten", title: "Controlepunten", Icon: ClipboardCheck },
+  { group: "Vastgoeddiensten", title: "Snelle opvolging", Icon: Wrench },
+] as const;
+
+const faqs = [
+  {
+    number: "01",
+    question: "Hoe snel kunnen jullie schakelen?",
+    answer:
+      "Bij directe meldingen stemmen we snel af wat prioriteit heeft en wanneer uitvoering praktisch kan plaatsvinden.",
+  },
+  {
+    number: "02",
+    question: "Kunnen schoonmaak, buitenonderhoud en herstelwerk gecombineerd worden?",
+    answer:
+      "Ja. Juist die combinatie houden we in een vaste lijn, zodat je niet met meerdere losse partijen hoeft te schakelen.",
+  },
+  {
+    number: "03",
+    question: "Werken jullie ook periodiek?",
+    answer:
+      "Ja. We stemmen vaste momenten af voor terugkerende schoonmaak, buitenonderhoud en controlepunten op locatie.",
+  },
+  {
+    number: "04",
+    question: "Hoe verloopt contact en opvolging?",
+    answer:
+      "Via korte lijnen, duidelijke terugkoppeling en vaste afspraken over wat gebeurt, wanneer het gebeurt en wat nog openstaat.",
+  },
+] as const;
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -17,16 +71,16 @@ function Index() {
             <div className="home-hero__eyebrow">
               Schoonmaak, buitenonderhoud en vastgoedservice
             </div>
-            <h1 className="home-hero__title">
-              Een pand dat elke dag strak, schoon en representatief blijft.
-            </h1>
-            <p className="home-hero__copy">
-              NordAnker regelt gebouwenreiniging, buitenonderhoud en kleine
-              reparaties met vaste kwaliteit, heldere communicatie en een team
-              dat gewoon op tijd komt.
-            </p>
+            <div className="home-hero__text">
+              <h1 className="home-hero__title">
+                Strak, schoon en representatief.
+              </h1>
+              <p className="home-hero__copy">
+                Gebouwenreiniging, buitenonderhoud en klein herstelwerk in een vaste lijn.
+              </p>
+            </div>
             <div className="home-hero__actions">
-              <Link className="home-hero__action home-hero__action--primary" to="/contact">
+              <Link className="home-hero__action home-hero__action--primary" to="/contact" viewTransition>
                 Offerte aanvragen
               </Link>
               <a className="home-hero__action home-hero__action--secondary" href="#diensten">
@@ -60,73 +114,40 @@ function Index() {
         <section className="home-offer" id="services">
           <div className="home-offer__inner">
             <div className="home-offer__header">
-              <div className="home-offer__eyebrow">Onze services</div>
-              <h2 className="home-offer__headline">
-                Alle onderdelen overzichtelijk onder drie vaste diensten.
-              </h2>
+              <div>
+                <div className="home-offer__eyebrow">Onze services</div>
+                <h2 className="home-offer__headline">
+                  Alle diensten in een doorlopende lijn met iconen.
+                </h2>
+              </div>
               <p className="home-offer__intro">
-                Geen losse subpagina&apos;s, maar een duidelijk overzicht waarin alle
-                werkzaamheden direct onder de juiste hoofddienst vallen.
+                Gebouwenreiniging, buitenonderhoud en vastgoedservice in een bewegende strip.
               </p>
             </div>
 
-            <div className="home-offer__rows">
-              <article className="home-offer__service" id="buitenonderhoud">
-                <div className="home-offer__service-head">
-                  <Building2 className="home-offer__service-icon" />
-                  <div>
-                    <h3 className="home-offer__service-title">Schoonmaak</h3>
-                    <p className="home-offer__service-copy">
-                      Dagelijkse en periodieke reiniging voor panden die zichtbaar netjes
-                      moeten blijven in gebruik.
-                    </p>
-                  </div>
-                </div>
-                <div className="home-offer__service-list">
-                  <span className="home-offer__service-item">Gebouwenreiniging</span>
-                  <span className="home-offer__service-item">Basis-/regelmatige schoonmaak</span>
-                  <span className="home-offer__service-item">Trappenhuisreiniging</span>
-                  <span className="home-offer__service-item">Ramenreiniging</span>
-                  <span className="home-offer__service-item">Hogedrukreiniging</span>
-                  <span className="home-offer__service-item">Graffiti verwijdering</span>
-                </div>
-              </article>
+            <div className="home-offer__marquee">
+              <div className="home-offer__grid">
+                {[...serviceItems, ...serviceItems].map((item, index) => {
+                  const Icon = item.Icon;
+                  const isPrimarySet = index < serviceItems.length;
 
-              <article className="home-offer__service" id="vastgoeddiensten">
-                <div className="home-offer__service-head">
-                  <Trees className="home-offer__service-icon" />
-                  <div>
-                    <h3 className="home-offer__service-title">Buitenonderhoud</h3>
-                    <p className="home-offer__service-copy">
-                      Onderhoud rond entrees, buitenzones en groenvoorziening voor een
-                      verzorgde eerste indruk in elk seizoen.
-                    </p>
-                  </div>
-                </div>
-                <div className="home-offer__service-list">
-                  <span className="home-offer__service-item">Tuinonderhoud</span>
-                  <span className="home-offer__service-item">Boomverzorging</span>
-                  <span className="home-offer__service-item">Winterdiensten</span>
-                </div>
-              </article>
-
-              <article className="home-offer__service">
-                <div className="home-offer__service-head">
-                  <Wrench className="home-offer__service-icon" />
-                  <div>
-                    <h3 className="home-offer__service-title">Vastgoeddiensten</h3>
-                    <p className="home-offer__service-copy">
-                      Praktische ondersteuning voor panden waar kleine gebreken en
-                      opvolging niet mogen blijven liggen.
-                    </p>
-                  </div>
-                </div>
-                <div className="home-offer__service-list">
-                  <span className="home-offer__service-item">Kleine reparaties</span>
-                  <span className="home-offer__service-item">Controlepunten</span>
-                  <span className="home-offer__service-item">Snelle opvolging</span>
-                </div>
-              </article>
+                  return (
+                    <article
+                      key={`${item.title}-${index}`}
+                      className="home-offer__item"
+                      id={isPrimarySet ? item.id : undefined}
+                    >
+                      <div className="home-offer__item-header">
+                        <p className="home-offer__item-detail">{item.group}</p>
+                        <h3 className="home-offer__item-title">{item.title}</h3>
+                      </div>
+                      <div className="home-offer__icon-wrap">
+                        <Icon className="home-offer__item-icon" />
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </section>
@@ -135,31 +156,31 @@ function Index() {
           <div className="home-why__inner">
             <div className="home-why__eyebrow">Waarom NordAnker</div>
             <h2 className="home-why__headline">
-              Een aanpak die snel schakelt, zichtbaar netjes werkt en overzicht houdt.
+              Geen ruis in de opvolging, maar vaste lijnen voor panden die verzorgd moeten blijven.
             </h2>
             <p className="home-why__intro">
-              Praktisch werken, helder communiceren en opvolging serieus nemen in elke fase van het werk.
+              Een vaste contactlijn, duidelijke afspraken en werk dat ook tijdens dagelijks gebruik representatief blijft.
             </p>
 
-            <div className="home-why__rows">
-              <div className="home-why__row">
-                <div className="home-why__term">Snel</div>
-                <p className="home-why__detail">
-                  Korte lijnen en directe actie zodra een pand aandacht nodig heeft.
+            <div className="home-why__proofs">
+              <div className="home-why__proof">
+                <div className="home-why__proof-title">Snelle lijn</div>
+                <p className="home-why__proof-copy">
+                  Direct schakelen zodra er iets speelt op locatie.
                 </p>
               </div>
 
-              <div className="home-why__row">
-                <div className="home-why__term">Netjes</div>
-                <p className="home-why__detail">
-                  Werkzaamheden die niet alleen opgelost worden, maar ook verzorgd ogen in dagelijks gebruik.
+              <div className="home-why__proof">
+                <div className="home-why__proof-title">Net uitgevoerd</div>
+                <p className="home-why__proof-copy">
+                  Werk dat zichtbaar klopt in entrees, algemene ruimtes en buitenzones.
                 </p>
               </div>
 
-              <div className="home-why__row">
-                <div className="home-why__term">Helder</div>
-                <p className="home-why__detail">
-                  Vaste communicatie, duidelijke afspraken en geen losse eindjes in de opvolging.
+              <div className="home-why__proof">
+                <div className="home-why__proof-title">Vaste afspraken</div>
+                <p className="home-why__proof-copy">
+                  Duidelijk wat gebeurt, wanneer het gebeurt en wat er nog openstaat.
                 </p>
               </div>
             </div>
@@ -168,104 +189,68 @@ function Index() {
 
         <section className="home-flow" id="werkwijze">
           <div className="home-flow__inner">
-            <div className="home-flow__intro">
-              <div className="home-flow__eyebrow">Werkwijze</div>
-              <h2 className="home-flow__headline">
-                Van melding tot uitvoering zonder losse eindjes.
-              </h2>
-              <p className="home-flow__copy">
-                Heldere afspraken, vaste terugkoppeling en een planning die past bij panden
-                die gewoon in gebruik blijven.
-              </p>
-            </div>
+            <div className="home-flow__eyebrow">Werkwijze</div>
+            <h2 className="home-flow__headline">
+              Vier stappen, korte lijn, duidelijke uitvoering.
+            </h2>
 
-            <div className="home-flow__rows">
-              <div className="home-flow__row">
-                <div className="home-flow__term">01 Melding of aanvraag</div>
-                <p className="home-flow__detail">
-                  We stemmen snel af wat direct nodig is, wat periodiek moet gebeuren en
-                  welke opvolging praktisch werkt op locatie.
+            <div className="home-flow__track">
+              <div className="home-flow__step">
+                <div className="home-flow__step-number">01</div>
+                <h3 className="home-flow__step-title">Melding</h3>
+                <p className="home-flow__step-copy">
+                  We stemmen direct af wat speelt, wat prioriteit heeft en wat praktisch nodig is.
                 </p>
               </div>
 
-              <div className="home-flow__row">
-                <div className="home-flow__term">02 Planning en afstemming</div>
-                <p className="home-flow__detail">
-                  Werkmomenten, toegang, aandachtspunten en verwachtingen worden vooraf
-                  duidelijk vastgelegd.
+              <div className="home-flow__step">
+                <div className="home-flow__step-number">02</div>
+                <h3 className="home-flow__step-title">Afstemming</h3>
+                <p className="home-flow__step-copy">
+                  Toegang, planning en aandachtspunten liggen vooraf duidelijk vast.
                 </p>
               </div>
 
-              <div className="home-flow__row">
-                <div className="home-flow__term">03 Uitvoering op locatie</div>
-                <p className="home-flow__detail">
-                  Schoonmaak, buitenonderhoud en herstelwerk worden netjes uitgevoerd met
-                  oog voor dagelijks gebruik van het pand.
+              <div className="home-flow__step">
+                <div className="home-flow__step-number">03</div>
+                <h3 className="home-flow__step-title">Uitvoering</h3>
+                <p className="home-flow__step-copy">
+                  Het werk gebeurt netjes op locatie, met oog voor gebruik en doorloop.
                 </p>
               </div>
 
-              <div className="home-flow__row">
-                <div className="home-flow__term">04 Controle en opvolging</div>
-                <p className="home-flow__detail">
-                  Na uitvoering blijft de communicatie kort en duidelijk, zodat open punten
-                  direct opgepakt kunnen worden.
+              <div className="home-flow__step">
+                <div className="home-flow__step-number">04</div>
+                <h3 className="home-flow__step-title">Terugkoppeling</h3>
+                <p className="home-flow__step-copy">
+                  Open punten blijven niet liggen en vervolgwerk wordt direct opgepakt.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="home-sectors" id="panden">
-          <div className="home-sectors__inner">
-            <div className="home-sectors__header">
-              <div className="home-sectors__eyebrow">Voor wie wij werken</div>
-              <h2 className="home-sectors__headline">
-                Praktische ondersteuning voor panden die elke dag verzorgd moeten blijven.
+        <section className="home-faq" id="faq">
+          <div className="home-faq__inner">
+            <div className="home-faq__header">
+              <div className="home-faq__eyebrow">FAQ</div>
+              <h2 className="home-faq__headline">
+                Korte antwoorden op vragen over planning, combinatie en opvolging.
               </h2>
-              <p className="home-sectors__copy">
-                Van entrees en algemene ruimtes tot buitenzones en klein herstelwerk, met
-                een aanpak die overzicht houdt in dagelijks beheer.
-              </p>
             </div>
 
-            <div className="home-sectors__list">
-              <div className="home-sectors__item">
-                <div className="home-sectors__name">Wooncomplexen en VvE&apos;s</div>
-                <p className="home-sectors__text">
-                  Trappenhuizen, entrees, glas en buitenruimte voor panden waar continu
-                  bewoners en bezoekers in- en uitlopen.
-                </p>
-              </div>
-
-              <div className="home-sectors__item">
-                <div className="home-sectors__name">Kantoren en bedrijfsunits</div>
-                <p className="home-sectors__text">
-                  Representatieve werkplekken, nette ontvangstruimtes en praktische
-                  opvolging van kleine herstelpunten.
-                </p>
-              </div>
-
-              <div className="home-sectors__item">
-                <div className="home-sectors__name">Commercieel vastgoed</div>
-                <p className="home-sectors__text">
-                  Locaties waar uitstraling, bereikbaarheid en continue netheid direct
-                  merkbaar zijn voor klanten en gebruikers.
-                </p>
-              </div>
-
-              <div className="home-sectors__item">
-                <div className="home-sectors__name">Buitenterreinen en entrees</div>
-                <p className="home-sectors__text">
-                  Onderhoud, reiniging en seizoenwerk voor de eerste indruk rond een pand
-                  en de dagelijkse doorgang naar binnen.
-                </p>
-              </div>
-            </div>
-
-            <div className="home-sectors__notes">
-              <span className="home-sectors__note">Vaste contactpersoon</span>
-              <span className="home-sectors__note">Korte lijnen</span>
-              <span className="home-sectors__note">Flexibel inzetbaar</span>
+            <div className="home-faq__list">
+              {faqs.map((faq, index) => (
+                <details key={faq.question} className="home-faq__item" open={index === 0}>
+                  <summary className="home-faq__summary">
+                    <span className="home-faq__number">{faq.number}</span>
+                    <span className="home-faq__question">{faq.question}</span>
+                  </summary>
+                  <div className="home-faq__answer">
+                    <p className="home-faq__answer-copy">{faq.answer}</p>
+                  </div>
+                </details>
+              ))}
             </div>
           </div>
         </section>
@@ -281,7 +266,7 @@ function Index() {
               <a className="home-cta__action home-cta__action--primary" href="https://wa.me/4915510095242">
                 WhatsApp
               </a>
-              <Link className="home-cta__action home-cta__action--secondary" to="/contact">
+              <Link className="home-cta__action home-cta__action--secondary" to="/contact" viewTransition>
                 Contactpagina
               </Link>
             </div>

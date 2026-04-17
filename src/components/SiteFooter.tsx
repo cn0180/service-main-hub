@@ -1,4 +1,9 @@
+import { Link, useLocation } from "@tanstack/react-router";
+
 function SiteFooter() {
+  const location = useLocation();
+  const isHome = location.pathname === "/";
+
   return (
     <footer className="home-footer">
       <div className="home-footer__inner">
@@ -25,18 +30,18 @@ function SiteFooter() {
 
         <div className="home-footer__column">
           <div className="home-footer__title">Navigatie</div>
-          <a className="home-footer__link" href="/#diensten">
+          <Link className="home-footer__link" to="/" hash="diensten" viewTransition={!isHome}>
             Diensten
-          </a>
-          <a className="home-footer__link" href="/#waarom">
+          </Link>
+          <Link className="home-footer__link" to="/" hash="waarom" viewTransition={!isHome}>
             Waarom NordAnker
-          </a>
-          <a className="home-footer__link" href="/#werkwijze">
+          </Link>
+          <Link className="home-footer__link" to="/" hash="werkwijze" viewTransition={!isHome}>
             Werkwijze
-          </a>
-          <a className="home-footer__link" href="/contact">
+          </Link>
+          <Link className="home-footer__link" to="/contact" viewTransition={location.pathname !== "/contact"}>
             Contact
-          </a>
+          </Link>
         </div>
 
         <div className="home-footer__column">
