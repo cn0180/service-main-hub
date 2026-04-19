@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
 import { ChevronDown, Globe } from "lucide-react";
+import { useLanguage } from "@/lib/language";
 
 const translations: Record<string, Record<string, string>> = {
   nl: {
@@ -35,36 +36,19 @@ const translations: Record<string, Record<string, string>> = {
     "Winterdiensten": "Winterdienst",
     "Kleine reparaties": "Kleinreparaturen",
   },
-  en: {
-    Home: "Home",
-    Schoonmaak: "Cleaning",
-    Buitenonderhoud: "Outdoor Maintenance",
-    Vastgoeddiensten: "Property Services",
-    Contact: "Contact",
-    "Gebouwenreiniging": "Building Cleaning",
-    "Basis-/regelmatige schoonmaak": "Regular Cleaning",
-    "Trappenhuisreiniging": "Stairwell Cleaning",
-    "Ramenreiniging": "Window Cleaning",
-    "Hogedrukreiniging": "Pressure Washing",
-    "Graffiti verwijdering": "Graffiti Removal",
-    "Tuinonderhoud / boomverzorging": "Garden / Tree Care",
-    "Winterdiensten": "Winter Services",
-    "Kleine reparaties": "Minor Repairs",
-  },
 };
 
 const navItems = [
   { name: "Home", to: "/" as const },
-  { name: "Schoonmaak", to: "/schoonmaak" as const },
-  { name: "Buitenonderhoud", to: "/buitenonderhoud" as const },
+  { name: "Schoonmaak", to: "/" as const, hash: "schoonmaakdiensten" },
+  { name: "Buitenonderhoud", to: "/" as const, hash: "buitenonderhoud" },
   { name: "Vastgoeddiensten", to: "/" as const, hash: "vastgoeddiensten" },
   { name: "Contact", to: "/contact" as const },
 ] as const;
 const languages = [
   { code: "nl", label: "Nederlands" },
   { code: "de", label: "Deutsch" },
-  { code: "en", label: "English" },
-];
+] as const;
 
 function NavLine() {
   return (
@@ -81,8 +65,8 @@ function NavLine() {
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [lang, setLang] = useState("nl");
   const [langOpen, setLangOpen] = useState(false);
+  const { lang, setLang } = useLanguage();
   const location = useLocation();
 
   useEffect(() => {
@@ -94,9 +78,27 @@ export default function Navbar() {
   const t = (key: string) => translations[lang]?.[key] || key;
 
   const isActive = (name: string) => {
-    if (name === "Home") return location.pathname === "/";
-    if (name === "Schoonmaak") return location.pathname.startsWith("/schoonmaak");
-    if (name === "Buitenonderhoud") return location.pathname.startsWith("/buitenonderhoud");
+    const currentHash = location.hash ?? "";
+
+    if (name === "Home") {
+      return (
+        location.pathname === "/" &&
+        !["#schoonmaakdiensten", "#buitenonderhoud", "#vastgoeddiensten"].includes(currentHash)
+      );
+    }
+
+    if (name === "Schoonmaak") {
+      return location.pathname === "/" && currentHash === "#schoonmaakdiensten";
+    }
+
+    if (name === "Buitenonderhoud") {
+      return location.pathname === "/" && currentHash === "#buitenonderhoud";
+    }
+
+    if (name === "Vastgoeddiensten") {
+      return location.pathname === "/" && currentHash === "#vastgoeddiensten";
+    }
+
     if (name === "Contact") return location.pathname === "/contact";
     return false;
   };
@@ -191,7 +193,7 @@ export default function Navbar() {
                       bottom: "0",
                       left: "50%",
                       transform: "translateX(-50%)",
-                      width: "0%",
+                      width: active ? "100%" : "0%",
                       height: "2px",
                       background: "linear-gradient(to right, #4a8c3f, #6ab85a)",
                       borderRadius: "1px",

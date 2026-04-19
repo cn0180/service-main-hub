@@ -10,14 +10,21 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SchoonmaakRouteImport } from './routes/schoonmaak'
+import { Route as PrivacybeleidRouteImport } from './routes/privacybeleid'
 import { Route as LinkmeRouteImport } from './routes/linkme'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BuitenonderhoudRouteImport } from './routes/buitenonderhoud'
+import { Route as AlgemeenBeleidRouteImport } from './routes/algemeen-beleid'
 import { Route as IndexRouteImport } from './routes/index'
 
 const SchoonmaakRoute = SchoonmaakRouteImport.update({
   id: '/schoonmaak',
   path: '/schoonmaak',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacybeleidRoute = PrivacybeleidRouteImport.update({
+  id: '/privacybeleid',
+  path: '/privacybeleid',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LinkmeRoute = LinkmeRouteImport.update({
@@ -35,6 +42,11 @@ const BuitenonderhoudRoute = BuitenonderhoudRouteImport.update({
   path: '/buitenonderhoud',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AlgemeenBeleidRoute = AlgemeenBeleidRouteImport.update({
+  id: '/algemeen-beleid',
+  path: '/algemeen-beleid',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -43,45 +55,69 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/algemeen-beleid': typeof AlgemeenBeleidRoute
   '/buitenonderhoud': typeof BuitenonderhoudRoute
   '/contact': typeof ContactRoute
   '/linkme': typeof LinkmeRoute
+  '/privacybeleid': typeof PrivacybeleidRoute
   '/schoonmaak': typeof SchoonmaakRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/algemeen-beleid': typeof AlgemeenBeleidRoute
   '/buitenonderhoud': typeof BuitenonderhoudRoute
   '/contact': typeof ContactRoute
   '/linkme': typeof LinkmeRoute
+  '/privacybeleid': typeof PrivacybeleidRoute
   '/schoonmaak': typeof SchoonmaakRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/algemeen-beleid': typeof AlgemeenBeleidRoute
   '/buitenonderhoud': typeof BuitenonderhoudRoute
   '/contact': typeof ContactRoute
   '/linkme': typeof LinkmeRoute
+  '/privacybeleid': typeof PrivacybeleidRoute
   '/schoonmaak': typeof SchoonmaakRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/buitenonderhoud' | '/contact' | '/linkme' | '/schoonmaak'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/buitenonderhoud' | '/contact' | '/linkme' | '/schoonmaak'
-  id:
-    | '__root__'
+  fullPaths:
     | '/'
+    | '/algemeen-beleid'
     | '/buitenonderhoud'
     | '/contact'
     | '/linkme'
+    | '/privacybeleid'
+    | '/schoonmaak'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/algemeen-beleid'
+    | '/buitenonderhoud'
+    | '/contact'
+    | '/linkme'
+    | '/privacybeleid'
+    | '/schoonmaak'
+  id:
+    | '__root__'
+    | '/'
+    | '/algemeen-beleid'
+    | '/buitenonderhoud'
+    | '/contact'
+    | '/linkme'
+    | '/privacybeleid'
     | '/schoonmaak'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AlgemeenBeleidRoute: typeof AlgemeenBeleidRoute
   BuitenonderhoudRoute: typeof BuitenonderhoudRoute
   ContactRoute: typeof ContactRoute
   LinkmeRoute: typeof LinkmeRoute
+  PrivacybeleidRoute: typeof PrivacybeleidRoute
   SchoonmaakRoute: typeof SchoonmaakRoute
 }
 
@@ -92,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/schoonmaak'
       fullPath: '/schoonmaak'
       preLoaderRoute: typeof SchoonmaakRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacybeleid': {
+      id: '/privacybeleid'
+      path: '/privacybeleid'
+      fullPath: '/privacybeleid'
+      preLoaderRoute: typeof PrivacybeleidRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/linkme': {
@@ -115,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BuitenonderhoudRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/algemeen-beleid': {
+      id: '/algemeen-beleid'
+      path: '/algemeen-beleid'
+      fullPath: '/algemeen-beleid'
+      preLoaderRoute: typeof AlgemeenBeleidRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -127,9 +177,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AlgemeenBeleidRoute: AlgemeenBeleidRoute,
   BuitenonderhoudRoute: BuitenonderhoudRoute,
   ContactRoute: ContactRoute,
   LinkmeRoute: LinkmeRoute,
+  PrivacybeleidRoute: PrivacybeleidRoute,
   SchoonmaakRoute: SchoonmaakRoute,
 }
 export const routeTree = rootRouteImport

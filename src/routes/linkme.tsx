@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Globe2, Mail, MessageCircle } from "lucide-react";
+import { useLanguage } from "@/lib/language";
 
 const directLinks = {
   whatsappLabel: "+49 015510095242",
@@ -21,6 +22,43 @@ export const Route = createFileRoute("/linkme")({
 });
 
 function LinkMePage() {
+  const { lang } = useLanguage();
+  const t = lang === "de"
+    ? {
+        title: "Direktkontakt",
+        copy: "Schnell. Direkt. Zuverlaessig.",
+        whatsapp: "WhatsApp",
+        mail: "E-Mail",
+        website: "Website",
+        open: "Oeffnen",
+        hours: "Oeffnungszeiten",
+        line1: "Mo-Fr: 08:00-18:00",
+        line2: "Sa: nach Vereinbarung",
+        line3: "Notfaelle via WhatsApp",
+        cta: "Jetzt per WhatsApp anfragen",
+        ctaNote: "Fuer Informationen oder ein Angebot.",
+        whatsappAria: "WhatsApp oeffnen",
+        mailAria: "E-Mail senden",
+        websiteAria: "Website oeffnen",
+      }
+    : {
+        title: "Direct contact",
+        copy: "Snel. Direct. Betrouwbaar.",
+        whatsapp: "WhatsApp",
+        mail: "E-mail",
+        website: "Website",
+        open: "Open",
+        hours: "Openingstijden",
+        line1: "Ma-Fr: 08:00-18:00",
+        line2: "Za: op afspraak",
+        line3: "Spoed via WhatsApp",
+        cta: "Nu via WhatsApp contact opnemen",
+        ctaNote: "Voor informatie of een offerte.",
+        whatsappAria: "WhatsApp openen",
+        mailAria: "E-mail sturen",
+        websiteAria: "Website openen",
+      };
+
   return (
     <main className="linkme-page">
       <section className="linkme-page__section">
@@ -32,8 +70,8 @@ function LinkMePage() {
           />
         </div>
         <div className="linkme-page__eyebrow">NordAnker Service</div>
-        <h1 className="linkme-page__title">Direktkontakt</h1>
-        <p className="linkme-page__copy">Schnell. Direkt. Zuverlaessig.</p>
+        <h1 className="linkme-page__title">{t.title}</h1>
+        <p className="linkme-page__copy">{t.copy}</p>
 
         <div className="linkme-page__list">
           <a
@@ -41,34 +79,34 @@ function LinkMePage() {
             href={directLinks.whatsappHref}
             target="_blank"
             rel="noreferrer"
-            aria-label="WhatsApp oeffnen"
+            aria-label={t.whatsappAria}
           >
             <div className="linkme-page__meta">
               <MessageCircle className="linkme-page__icon" />
               <div>
-                <div className="linkme-page__label">WhatsApp</div>
+                <div className="linkme-page__label">{t.whatsapp}</div>
                 <div className="linkme-page__value">{directLinks.whatsappLabel}</div>
               </div>
             </div>
             <span className="linkme-page__chevron" aria-hidden="true">
-              Oeffnen
+              {t.open}
             </span>
           </a>
 
           <a
             className="linkme-page__row"
             href={directLinks.emailHref}
-            aria-label="E-Mail senden"
+            aria-label={t.mailAria}
           >
             <div className="linkme-page__meta">
               <Mail className="linkme-page__icon" />
               <div>
-                <div className="linkme-page__label">E-Mail</div>
+                <div className="linkme-page__label">{t.mail}</div>
                 <div className="linkme-page__value">{directLinks.emailLabel}</div>
               </div>
             </div>
             <span className="linkme-page__chevron" aria-hidden="true">
-              Oeffnen
+              {t.open}
             </span>
           </a>
 
@@ -77,26 +115,26 @@ function LinkMePage() {
             href={directLinks.websiteHref}
             target="_blank"
             rel="noreferrer"
-            aria-label="Website oeffnen"
+            aria-label={t.websiteAria}
           >
             <div className="linkme-page__meta">
               <Globe2 className="linkme-page__icon" />
               <div>
-                <div className="linkme-page__label">Website</div>
+                <div className="linkme-page__label">{t.website}</div>
                 <div className="linkme-page__value">{directLinks.websiteLabel}</div>
               </div>
             </div>
             <span className="linkme-page__chevron" aria-hidden="true">
-              Oeffnen
+              {t.open}
             </span>
           </a>
         </div>
 
         <div className="linkme-page__hours">
-          <div className="linkme-page__hours-title">Oeffnungszeiten</div>
-          <div className="linkme-page__hours-line">Mo-Fr: 08:00-18:00</div>
-          <div className="linkme-page__hours-line">Sa: nach Vereinbarung</div>
-          <div className="linkme-page__hours-line">Notfaelle via WhatsApp</div>
+          <div className="linkme-page__hours-title">{t.hours}</div>
+          <div className="linkme-page__hours-line">{t.line1}</div>
+          <div className="linkme-page__hours-line">{t.line2}</div>
+          <div className="linkme-page__hours-line">{t.line3}</div>
         </div>
 
         <a
@@ -105,9 +143,9 @@ function LinkMePage() {
           target="_blank"
           rel="noreferrer"
         >
-          Jetzt per WhatsApp anfragen
+          {t.cta}
         </a>
-        <div className="linkme-page__cta-note">Fuer Informationen oder ein Angebot.</div>
+        <div className="linkme-page__cta-note">{t.ctaNote}</div>
       </section>
     </main>
   );
