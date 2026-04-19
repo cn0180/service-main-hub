@@ -5,7 +5,7 @@ import { useLanguage } from "@/lib/language";
 
 export const Route = createFileRoute("/algemeen-beleid")({
   head: () => ({
-    meta: [{ title: "NordAnker Service | Algemeen beleid" }],
+    meta: [{ title: "NordAnker Service | General Policy" }],
   }),
   component: AlgemeenBeleidPage,
 });
@@ -26,15 +26,15 @@ function AlgemeenBeleidPage() {
         ],
       }
     : {
-        eyebrow: "Algemeen beleid",
-        title: "Heldere afspraken over planning, uitvoering en communicatie.",
-        copy: "NordAnker Service werkt met duidelijke afstemming vooraf, nette uitvoering op locatie en heldere terugkoppeling tijdens en na de werkzaamheden.",
+        eyebrow: "General Policy",
+        title: "Clear agreements on planning, execution and communication.",
+        copy: "NordAnker Service works with clear alignment in advance, neat execution on site and clear feedback during and after the work.",
         rows: [
-          ["Planning", "Werkzaamheden worden afgestemd op bereikbaarheid, gebruik van het pand en de afgesproken frequentie of prioriteit."],
-          ["Uitvoering", "Werk wordt zorgvuldig en representatief uitgevoerd, met aandacht voor veiligheid, doorgang en een nette oplevering van de ruimte."],
-          ["Bereikbaarheid", "Voor snelle afstemming gebruiken we korte communicatielijnen via telefoon, WhatsApp of e-mail, afhankelijk van de aard van de melding."],
-          ["Wijzigingen", "Wanneer planning, toegang of omvang verandert, stemmen we dit vooraf opnieuw af zodat uitvoering en verwachtingen helder blijven."],
-          ["Vragen of opmerkingen", "Voor praktische vragen, opmerkingen of afstemming over lopende werkzaamheden kun je direct contact opnemen via info@nordanker-service.de of +49 015510095242."],
+          ["Planning", "Work is aligned with accessibility, building usage and agreed frequency or priority."],
+          ["Execution", "Work is carried out carefully and representatively, with attention to safety, flow and a neat handover of the area."],
+          ["Availability", "For quick alignment we use short communication lines via phone, WhatsApp or e-mail, depending on the request type."],
+          ["Changes", "If planning, access or scope changes, we realign in advance so execution and expectations stay clear."],
+          ["Questions or remarks", "For practical questions, remarks or alignment on ongoing work, contact us directly via info@nordanker-service.de or +49 015510095242."],
         ],
       };
 

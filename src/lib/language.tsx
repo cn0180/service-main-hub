@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
-export type LanguageCode = "nl" | "de";
+export type LanguageCode = "en" | "de";
 
 type LanguageContextValue = {
   lang: LanguageCode;
@@ -12,21 +12,24 @@ const STORAGE_KEY = "nordanker-language";
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLang] = useState<LanguageCode>("nl");
+  const [lang, setLang] = useState<LanguageCode>("en");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const stored = window.localStorage.getItem(STORAGE_KEY);
 
-    if (stored === "nl" || stored === "de") {
+    if (stored === "en" || stored === "de") {
       setLang(stored);
       return;
     }
 
     if (window.navigator.language.toLowerCase().startsWith("de")) {
       setLang("de");
+      return;
     }
+
+    setLang("en");
   }, []);
 
   useEffect(() => {

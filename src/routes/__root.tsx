@@ -13,9 +13,9 @@ function NotFoundComponent() {
         cta: "Zur Startseite",
       }
     : {
-        title: "Pagina niet gevonden",
-        copy: "De pagina die je zoekt bestaat niet of is verplaatst.",
-        cta: "Terug naar home",
+        title: "Page not found",
+        copy: "The page you are looking for does not exist or has moved.",
+        cta: "Back to home",
       };
 
   return (
@@ -61,6 +61,11 @@ export const Route = createRootRoute({
         rel: "stylesheet",
         href: appCss,
       },
+      {
+        rel: "icon",
+        href: "/favicon.ico",
+        type: "image/x-icon",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -70,7 +75,7 @@ export const Route = createRootRoute({
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="nl">
+    <html lang="en">
       <head>
         <HeadContent />
       </head>
@@ -100,7 +105,7 @@ function RootComponent() {
           href="https://wa.me/4915510095242"
           target="_blank"
           rel="noreferrer"
-          aria-label={lang === "de" ? "WhatsApp oeffnen" : "WhatsApp openen"}
+          aria-label={lang === "de" ? "WhatsApp oeffnen" : "Open WhatsApp"}
         >
           <img
             className="floating-whatsapp__icon"

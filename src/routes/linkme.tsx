@@ -43,20 +43,20 @@ function LinkMePage() {
       }
     : {
         title: "Direct contact",
-        copy: "Snel. Direct. Betrouwbaar.",
+        copy: "Fast. Direct. Reliable.",
         whatsapp: "WhatsApp",
         mail: "E-mail",
         website: "Website",
         open: "Open",
-        hours: "Openingstijden",
-        line1: "Ma-Fr: 08:00-18:00",
-        line2: "Za: op afspraak",
-        line3: "Spoed via WhatsApp",
-        cta: "Nu via WhatsApp contact opnemen",
-        ctaNote: "Voor informatie of een offerte.",
-        whatsappAria: "WhatsApp openen",
-        mailAria: "E-mail sturen",
-        websiteAria: "Website openen",
+        hours: "Opening hours",
+        line1: "Mon-Fri: 08:00-18:00",
+        line2: "Sat: by appointment",
+        line3: "Urgent via WhatsApp",
+        cta: "Contact us on WhatsApp now",
+        ctaNote: "For information or a quote.",
+        whatsappAria: "Open WhatsApp",
+        mailAria: "Send e-mail",
+        websiteAria: "Open website",
       };
 
   return (
