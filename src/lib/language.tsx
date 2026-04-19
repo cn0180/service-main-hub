@@ -12,7 +12,7 @@ const STORAGE_KEY = "nordanker-language";
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLang] = useState<LanguageCode>("nl");
+  const [lang, setLang] = useState<LanguageCode>("de");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -24,9 +24,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    if (window.navigator.language.toLowerCase().startsWith("de")) {
-      setLang("de");
-    }
+    setLang("de");
   }, []);
 
   useEffect(() => {

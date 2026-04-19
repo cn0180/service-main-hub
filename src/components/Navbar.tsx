@@ -46,8 +46,8 @@ const navItems = [
   { name: "Contact", to: "/contact" as const },
 ] as const;
 const languages = [
-  { code: "nl", label: "Nederlands" },
   { code: "de", label: "Deutsch" },
+  { code: "nl", label: "Nederlands" },
 ] as const;
 
 function NavLine() {
