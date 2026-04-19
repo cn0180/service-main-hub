@@ -26,33 +26,39 @@ function ContactPage() {
         hoursValue: "Mo-Fr 08:00-18:00",
         hoursNote: "Sa nach Vereinbarung, Notfaelle via WhatsApp",
         scopeEyebrow: "Leistungsbereiche",
-        scopeTitle: "Wobei wir direkt unterstuetzen",
+        scopeTitle: "Leistungen im Ueberblick",
         cleaning: "Reinigung",
-        cleaningDetail: "Gebaeudereinigung, Grund-/Unterhaltsreinigung, Treppenhausreinigung, Fensterreinigung, Hochdruckreinigung und Graffitientfernung.",
+        cleaningDetail: "Innenraeume und Glas in einer festen Linie.",
+        cleaningTags: ["Gebaeude", "Unterhalt", "Treppenhaus", "Fenster", "Hochdruck", "Graffiti"],
         outdoor: "Aussenpflege",
-        outdoorDetail: "Gartenpflege, Baumpflege und Winterdienst fuer Eingaenge, Aussenbereiche und Gelaende, die gepflegt bleiben muessen.",
+        outdoorDetail: "Aussenbereiche sauber, gepflegt und saisonbereit.",
+        outdoorTags: ["Gartenpflege", "Baumpflege", "Winterdienst"],
         property: "Immobiliendienste",
-        propertyDetail: "Kleinreparaturen, Kontrollpunkte und praktische Rueckmeldung bei Dingen, die im taeglichen Betrieb nicht liegen bleiben duerfen.",
+        propertyDetail: "Kleinere Punkte schnell und sauber geloest.",
+        propertyTags: ["Kleinreparaturen", "Kontrollpunkte", "Rueckmeldung"],
       }
     : {
         title: "Direct contact",
         whatsapp: "WhatsApp",
         mailLabel: "E-mail",
         website: "Website",
-        hours: "Openingstijden",
-        whatsappNote: "Snelle opvolging en directe afstemming",
-        mailNote: "Aanvragen, offertes en periodieke planning",
-        websiteNote: "Meer informatie en bedrijfsdetails",
-        hoursValue: "Ma-Fr 08:00-18:00",
-        hoursNote: "Za op afspraak, spoed via WhatsApp",
-        scopeEyebrow: "Diensten",
-        scopeTitle: "Waar we direct bij helpen",
-        cleaning: "Schoonmaak",
-        cleaningDetail: "Gebouwenreiniging, basis-/regelmatige schoonmaak, trappenhuisreiniging, ramenreiniging, hogedrukreiniging en graffiti verwijdering.",
-        outdoor: "Buitenonderhoud",
-        outdoorDetail: "Tuinonderhoud, boomverzorging en winterdiensten voor entrees, buitenzones en terreinen die verzorgd moeten blijven.",
-        property: "Vastgoeddiensten",
-        propertyDetail: "Kleine reparaties, controlepunten en praktische opvolging van punten die in dagelijks beheer niet mogen blijven liggen.",
+        hours: "Opening hours",
+        whatsappNote: "Fast response and direct coordination",
+        mailNote: "Requests, quotes and recurring planning",
+        websiteNote: "More information and company details",
+        hoursValue: "Mon-Fri 08:00-18:00",
+        hoursNote: "Sat by appointment, urgent via WhatsApp",
+        scopeEyebrow: "Services",
+        scopeTitle: "What we handle",
+        cleaning: "Cleaning",
+        cleaningDetail: "Interior and glass cleaning in one fixed line.",
+        cleaningTags: ["Building", "Regular rounds", "Stairwells", "Windows", "High-pressure", "Graffiti"],
+        outdoor: "Outdoor care",
+        outdoorDetail: "Outdoor zones kept neat and season-ready.",
+        outdoorTags: ["Garden care", "Tree care", "Winter service"],
+        property: "Property services",
+        propertyDetail: "Small issues handled quickly and clearly.",
+        propertyTags: ["Small repairs", "Control points", "Follow-up"],
       };
 
   return (
@@ -122,17 +128,38 @@ function ContactPage() {
             <div className="contact-scope__rows">
               <div className="contact-scope__row">
                 <div className="contact-scope__term">{t.cleaning}</div>
-                <p className="contact-scope__detail">{t.cleaningDetail}</p>
+                <div className="contact-scope__content">
+                  <p className="contact-scope__detail">{t.cleaningDetail}</p>
+                  <div className="contact-scope__tags">
+                    {t.cleaningTags.map((tag) => (
+                      <span key={tag} className="contact-scope__tag">{tag}</span>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               <div className="contact-scope__row">
                 <div className="contact-scope__term">{t.outdoor}</div>
-                <p className="contact-scope__detail">{t.outdoorDetail}</p>
+                <div className="contact-scope__content">
+                  <p className="contact-scope__detail">{t.outdoorDetail}</p>
+                  <div className="contact-scope__tags">
+                    {t.outdoorTags.map((tag) => (
+                      <span key={tag} className="contact-scope__tag">{tag}</span>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               <div className="contact-scope__row">
                 <div className="contact-scope__term">{t.property}</div>
-                <p className="contact-scope__detail">{t.propertyDetail}</p>
+                <div className="contact-scope__content">
+                  <p className="contact-scope__detail">{t.propertyDetail}</p>
+                  <div className="contact-scope__tags">
+                    {t.propertyTags.map((tag) => (
+                      <span key={tag} className="contact-scope__tag">{tag}</span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

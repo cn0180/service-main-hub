@@ -4,56 +4,56 @@ import SiteFooter from "@/components/SiteFooter";
 import { useLanguage } from "@/lib/language";
 
 const outdoorServices = [
-  "Tuinonderhoud",
-  "Boomverzorging",
-  "Winterdiensten",
+  "Garden Care",
+  "Tree Care",
+  "Winter Services",
 ] as const;
 
 const outdoorGroups = [
   {
-    label: "Groen en eerste indruk",
-    title: "Tuinonderhoud voor verzorgde buitenruimtes",
+    label: "Green areas and first impression",
+    title: "Garden care for well-kept outdoor spaces",
     copy:
-      "Voor entrees, plantvakken, groenstroken en buitenzones die netjes moeten ogen en in dagelijks gebruik op orde moeten blijven.",
-    items: ["Tuinonderhoud"],
+      "For entrances, planting zones, green strips and outdoor areas that need to stay neat and in order during daily use.",
+    items: ["Garden Care"],
   },
   {
-    label: "Structuur en veiligheid",
-    title: "Boomverzorging met aandacht voor overzicht en doorgang",
+    label: "Structure and safety",
+    title: "Tree care with attention to visibility and access",
     copy:
-      "Voor bomen en grotere groenonderdelen die onderhoud nodig hebben om het terrein verzorgd, toegankelijk en veilig te houden.",
-    items: ["Boomverzorging"],
+      "For trees and larger green elements that need maintenance to keep grounds neat, accessible and safe.",
+    items: ["Tree Care"],
   },
   {
-    label: "Seizoen en bereikbaarheid",
-    title: "Winterdiensten zodra weersomstandigheden het vragen",
+    label: "Season and accessibility",
+    title: "Winter services when weather conditions require action",
     copy:
-      "Voor paden, entrees en buitenruimtes die ook in koude en natte periodes bruikbaar en representatief moeten blijven.",
-    items: ["Winterdiensten"],
+      "For paths, entrances and outdoor spaces that must remain usable and representative in cold and wet periods.",
+    items: ["Winter Services"],
   },
 ] as const;
 
 const outdoorApproach = [
   {
-    term: "Seizoensplanning",
+    term: "Season planning",
     detail:
-      "We stemmen onderhoud af op groeiperiodes, weersinvloed en de belasting van het terrein rond het pand.",
+      "We align maintenance with growth periods, weather impact and load around the property.",
   },
   {
-    term: "Uitvoering op locatie",
+    term: "On-site execution",
     detail:
-      "Werk gebeurt met oog voor doorgang, bewoners, bezoekers en de eerste indruk bij aankomst.",
+      "Work is carried out with attention to access, residents, visitors and first impression on arrival.",
   },
   {
-    term: "Vaste opvolging",
+    term: "Fixed follow-up",
     detail:
-      "Aandachtspunten blijven in beeld zodat buitenonderhoud niet afhankelijk wordt van losse meldingen.",
+      "Focus points remain visible so outdoor care is not dependent on isolated requests.",
   },
 ] as const;
 
 export const Route = createFileRoute("/buitenonderhoud")({
   head: () => ({
-    meta: [{ title: "NordAnker Service | Buitenonderhoud" }],
+    meta: [{ title: "NordAnker Service | Outdoor Care" }],
   }),
   component: OutdoorPage,
 });
@@ -119,19 +119,19 @@ function OutdoorPage() {
         ctaTitle: "Nimm Kontakt auf fuer Aussenpflege, die zu Gelaende, Saison und Nutzung passt.",
       }
     : {
-        eyebrow: "Buitenonderhoud",
-        title: "Buitenonderhoud voor panden die buiten net zo verzorgd moeten ogen als binnen.",
-        copy: "Geen losse onderdelen onder elkaar, maar een duidelijke aanpak voor groen, terrein en seizoenswerk rond het pand.",
-        contact: "Contactpagina",
-        overviewEyebrow: "Wat we aanbieden",
-        overviewTitle: "Alles wat onder buitenonderhoud valt, helder in een geheel.",
-        overviewCopy: "Voor entrees, paden, groenstroken en buitenruimtes die het hele jaar door verzorgd, bruikbaar en representatief moeten blijven.",
-        scopeEyebrow: "Waar het om gaat",
-        scopeTitle: "Buitenonderhoud dat aansluit op uitstraling, veiligheid en dagelijks gebruik.",
-        approachEyebrow: "Hoe we werken",
-        approachTitle: "Buitenonderhoud dat meebeweegt met seizoen, terrein en gebruik.",
-        ctaEyebrow: "Direct afstemmen",
-        ctaTitle: "Neem contact op voor buitenonderhoud dat past bij terrein, seizoen en gebruik.",
+        eyebrow: "Outdoor care",
+        title: "Outdoor care for properties that must look as presentable outside as they do inside.",
+        copy: "No separate pieces under each other, but one clear approach for green zones, terrain and seasonal work around the property.",
+        contact: "Contact page",
+        overviewEyebrow: "What we offer",
+        overviewTitle: "Everything under outdoor care in one clear overview.",
+        overviewCopy: "For entrances, paths, green strips and outdoor spaces that must stay neat, usable and representative all year.",
+        scopeEyebrow: "What this covers",
+        scopeTitle: "Outdoor care aligned with appearance, safety and daily use.",
+        approachEyebrow: "How we work",
+        approachTitle: "Outdoor care that moves with season, terrain and usage.",
+        ctaEyebrow: "Direct alignment",
+        ctaTitle: "Get in touch for outdoor care that fits terrain, season and usage.",
       };
 
   return (

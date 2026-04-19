@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import {
   Mail,
@@ -8,61 +9,61 @@ import SiteFooter from "@/components/SiteFooter";
 import { useLanguage } from "@/lib/language";
 
 const serviceSections = {
-  nl: [
+  en: [
     {
       id: "schoonmaakdiensten",
-      title: "Schoonmaakdiensten",
-      copy: "Voor binnenruimtes en glas dat dagelijks fris, netjes en representatief moet blijven.",
+      title: "Cleaning Services",
+      copy: "For indoor areas and glass that must stay fresh, neat and representative every day.",
       items: [
         {
-          title: "Gebouwenreiniging",
-          detail: "Schoonmaak van entrees, algemene ruimtes en loopzones op vaste momenten.",
+          title: "Building Cleaning",
+          detail: "Cleaning of entrances, shared areas and walkways at fixed intervals.",
         },
         {
-          title: "Basis-/Regelmatige schoonmaak",
-          detail: "Terugkerende rondes afgestemd op gebruik, bezetting en gewenste uitstraling.",
+          title: "Basic / Regular Cleaning",
+          detail: "Recurring rounds aligned with use, occupancy and required presentation.",
         },
         {
-          title: "Trappenhuisreiniging",
-          detail: "Trappenhuizen en lifthallen netjes gehouden voor dagelijks intensief gebruik.",
+          title: "Stairwell Cleaning",
+          detail: "Stairwells and lift lobbies kept clean for intensive daily use.",
         },
         {
-          title: "Ramenreiniging",
-          detail: "Binnen- en buitenzijde van glas voor een heldere en verzorgde eerste indruk.",
+          title: "Window Cleaning",
+          detail: "Inside and outside glass cleaned for a clear and well-kept first impression.",
         },
       ],
     },
     {
       id: "buitenonderhoud",
-      title: "Buitenonderhoud",
-      copy: "Voor gevels, terrein en buitenzones die verzorgd en veilig moeten ogen in elk seizoen.",
+      title: "Outdoor Care",
+      copy: "For facades, grounds and outdoor zones that must look clean and safe in every season.",
       items: [
         {
-          title: "Hogedrukreiniging",
-          detail: "Dieptereiniging van steen, bestrating en gevelvlakken met passend drukniveau.",
+          title: "High-pressure Cleaning",
+          detail: "Deep cleaning of stone, paving and facade surfaces with suitable pressure levels.",
         },
         {
-          title: "Tuinonderhoud / Boomverzorging",
-          detail: "Onderhoud van groen, snoeiwerk en verzorging van bomen rond het pand.",
+          title: "Garden / Tree Care",
+          detail: "Maintenance of green areas, pruning work and tree care around the property.",
         },
         {
-          title: "Graffiti verwijdering",
-          detail: "Snelle verwijdering van graffiti om de uitstraling van het pand te herstellen.",
+          title: "Graffiti Removal",
+          detail: "Fast graffiti removal to restore the appearance of the property.",
         },
       ],
     },
     {
       id: "vastgoeddiensten",
-      title: "Vastgoeddiensten",
-      copy: "Voor kleine herstelpunten die snel en zonder ruis opgepakt moeten worden.",
+      title: "Property Services",
+      copy: "For minor repair points that need fast and clear follow-up.",
       items: [
         {
-          title: "Winterdiensten",
-          detail: "Sneeuw- en gladheidsaanpak voor toegangen en looproutes in koude periodes.",
+          title: "Winter Services",
+          detail: "Snow and anti-slip response for access points and walkways in cold periods.",
         },
         {
-          title: "Kleine reparaties",
-          detail: "Kleine herstelpunten en praktische ingrepen die dagelijks beheer soepel houden.",
+          title: "Small Repairs",
+          detail: "Small fixes and practical interventions that keep daily property operations running.",
         },
       ],
     },
@@ -129,26 +130,26 @@ const serviceSections = {
 } as const;
 
 const faqs = {
-  nl: [
+  en: [
     {
-      question: "Hoe snel kunnen jullie schakelen?",
+      question: "How fast can you respond?",
       answer:
-        "Bij directe meldingen stemmen we snel af wat prioriteit heeft en wanneer uitvoering praktisch kan plaatsvinden.",
+        "For urgent requests we quickly align priorities and a practical execution moment.",
     },
     {
-      question: "Kunnen schoonmaak, buitenonderhoud en herstelwerk gecombineerd worden?",
+      question: "Can cleaning, outdoor care and repair work be combined?",
       answer:
-        "Ja. Juist die combinatie houden we in een vaste lijn, zodat je niet met meerdere losse partijen hoeft te schakelen.",
+        "Yes. We keep this combination in one fixed line, so you do not need to coordinate multiple separate parties.",
     },
     {
-      question: "Werken jullie ook periodiek?",
+      question: "Do you also work on a recurring schedule?",
       answer:
-        "Ja. We stemmen vaste momenten af voor terugkerende schoonmaak, buitenonderhoud en controlepunten op locatie.",
+        "Yes. We set fixed moments for recurring cleaning, outdoor care and control points on site.",
     },
     {
-      question: "Hoe verloopt contact en opvolging?",
+      question: "How does contact and follow-up work?",
       answer:
-        "Via korte lijnen, duidelijke terugkoppeling en vaste afspraken over wat gebeurt, wanneer het gebeurt en wat nog openstaat.",
+        "Through short communication lines, clear feedback and fixed agreements on what is done, when it is done, and what is still open.",
     },
   ],
   de: [
@@ -176,12 +177,12 @@ const faqs = {
 } as const;
 
 const whyPoints = {
-  nl: [
-    "Betrouwbaarheid en discretie",
-    "Professioneel en ervaren team",
-    "Hoogwaardige schoonmaakmiddelen",
-    "Flexibele planning",
-    "Scherpe en transparante prijzen",
+  en: [
+    "Reliability and discretion",
+    "Professional and experienced team",
+    "High-quality cleaning products",
+    "Flexible planning",
+    "Clear and transparent pricing",
   ],
   de: [
     "Zuverlaessigkeit und Diskretion",
@@ -202,13 +203,19 @@ function Index() {
     ? {
         heroEyebrow: "Reinigung, Aussenpflege und Immobiliendienste",
         heroTitle: "Sauber, ordentlich und repraesentativ.",
+        heroCopy: "Ein Team fuer Reinigung, Aussenpflege und praktische Immobiliendienste mit klarer Planung und direkter Rueckmeldung.",
         heroPrimary: "Angebot anfragen",
         heroSecondary: "Leistungen ansehen",
-        stats: ["Projekte", "Zufrieden", "Jahre", "Antwort"],
+        stats: [
+          ["3", "Bereiche"],
+          ["9", "Dienste"],
+          ["24/7", "Notaufnahme"],
+          ["08-18", "Werktage"],
+        ],
         servicesEyebrow: "Unsere Leistungen",
         whyEyebrow: "Warum NordAnker",
         whyTitle: "Reinigung, auf die man sich verlassen kann",
-        whyCopy: "Wir liefern gruendliche und sorgfaeltige Reinigung, damit jede Flaeche frisch, ordentlich und repraesentativ bleibt. Absprachen gelten, mit Blick fuer Details bis in jede Ecke.",
+        whyCopy: "Gruendliche Reinigung mit klaren Absprachen und sichtbar ordentlichem Ergebnis.",
         flowEyebrow: "Ablauf",
         flowTitle: "Vier Schritte, kurze Wege, klare Ausfuehrung.",
         flowSteps: [
@@ -218,36 +225,77 @@ function Index() {
           ["Rueckmeldung", "Offene Punkte bleiben nicht liegen und Folgearbeiten werden direkt aufgenommen."],
         ],
         faqEyebrow: "FAQ",
-        faqTitle: "Kurze Antworten zu Planung, Kombination und Rueckmeldung.",
         ctaTitle: "Bereit fuer eine saubere Umgebung?",
-        ctaCopy: "Dann nimm Kontakt mit einem unserer Mitarbeiter auf.",
       }
     : {
-        heroEyebrow: "Schoonmaak, buitenonderhoud en vastgoedservice",
-        heroTitle: "Strak, schoon en representatief.",
-        heroPrimary: "Offerte aanvragen",
-        heroSecondary: "Bekijk diensten",
-        stats: ["Projecten", "Tevreden", "Jaar", "Response"],
-        servicesEyebrow: "Onze services",
-        whyEyebrow: "Waarom NordAnker",
-        whyTitle: "Schoonmaak waarop je kunt vertrouwen",
-        whyCopy: "Wij leveren een grondige en zorgvuldige schoonmaak, zodat elke ruimte fris, netjes en representatief achterblijft. Afspraak is afspraak, met oog voor detail in elk hoekje.",
-        flowEyebrow: "Werkwijze",
-        flowTitle: "Vier stappen, korte lijn, duidelijke uitvoering.",
+        heroEyebrow: "Cleaning, outdoor care and property services",
+        heroTitle: "Clean, sharp and representative.",
+        heroCopy: "One team for cleaning, outdoor care and practical property support with clear planning and direct follow-up.",
+        heroPrimary: "Request quote",
+        heroSecondary: "View services",
+        stats: [
+          ["3", "Areas"],
+          ["9", "Services"],
+          ["24/7", "Urgency"],
+          ["08-18", "Weekdays"],
+        ],
+        servicesEyebrow: "Our services",
+        whyEyebrow: "Why NordAnker",
+        whyTitle: "Cleaning you can rely on",
+        whyCopy: "Thorough work, clear agreements and a visibly neat result.",
+        flowEyebrow: "Workflow",
+        flowTitle: "Four steps, short lines, clear execution.",
         flowSteps: [
-          ["Melding", "We stemmen direct af wat speelt, wat prioriteit heeft en wat praktisch nodig is."],
-          ["Afstemming", "Toegang, planning en aandachtspunten liggen vooraf duidelijk vast."],
-          ["Uitvoering", "Het werk gebeurt netjes op locatie, met oog voor gebruik en doorloop."],
-          ["Terugkoppeling", "Open punten blijven niet liggen en vervolgwerk wordt direct opgepakt."],
+          ["Request", "We align quickly on what is happening, what has priority and what is practically needed."],
+          ["Planning", "Access, timing and focus points are fixed clearly in advance."],
+          ["Execution", "Work is done neatly on-site with attention to daily use and flow."],
+          ["Follow-up", "Open points are not left behind and next actions are handled directly."],
         ],
         faqEyebrow: "FAQ",
-        faqTitle: "Korte antwoorden op vragen over planning, combinatie en opvolging.",
-        ctaTitle: "Klaar voor een schone omgeving?",
-        ctaCopy: "Neem dan contact op met een van onze medewerkers.",
+        ctaTitle: "Ready for a clean environment?",
       };
   const localizedServiceSections = serviceSections[lang];
   const localizedFaqs = faqs[lang];
   const localizedWhyPoints = whyPoints[lang];
+  const flowTrackRef = useRef<HTMLDivElement | null>(null);
+  const [flowProgress, setFlowProgress] = useState(0);
+
+  useEffect(() => {
+    let raf = 0;
+
+    const updateProgress = () => {
+      const track = flowTrackRef.current;
+      if (!track) return;
+
+      const rect = track.getBoundingClientRect();
+      const viewport = window.innerHeight || 1;
+      const start = viewport * 0.82;
+      const end = -rect.height * 0.18;
+      const raw = (start - rect.top) / (start - end);
+      const clamped = Math.max(0, Math.min(1, raw));
+
+      setFlowProgress((prev) => (Math.abs(prev - clamped) > 0.01 ? clamped : prev));
+    };
+
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(updateProgress);
+    };
+
+    updateProgress();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
+  const flowTrackStyle = {
+    "--flow-progress": `${(flowProgress * 100).toFixed(1)}%`,
+  } as CSSProperties;
 
   return (
     <div>
@@ -262,6 +310,9 @@ function Index() {
               <h1 className="home-hero__title">
                 {t.heroTitle}
               </h1>
+              <p className="home-hero__copy">
+                {t.heroCopy}
+              </p>
             </div>
             <div className="home-hero__actions">
               <Link className="home-hero__action home-hero__action--primary" to="/contact" viewTransition>
@@ -276,22 +327,12 @@ function Index() {
 
         <section className="home-stats" id="diensten">
           <div className="home-stats__inner">
-            <div className="home-stats__item">
-              <div className="home-stats__value">150+</div>
-              <div className="home-stats__label">{t.stats[0]}</div>
-            </div>
-            <div className="home-stats__item">
-              <div className="home-stats__value">98%</div>
-              <div className="home-stats__label">{t.stats[1]}</div>
-            </div>
-            <div className="home-stats__item">
-              <div className="home-stats__value">5+</div>
-              <div className="home-stats__label">{t.stats[2]}</div>
-            </div>
-            <div className="home-stats__item">
-              <div className="home-stats__value">24u</div>
-              <div className="home-stats__label">{t.stats[3]}</div>
-            </div>
+            {t.stats.map((stat) => (
+              <div key={stat[1]} className="home-stats__item">
+                <div className="home-stats__value">{stat[0]}</div>
+                <div className="home-stats__label">{stat[1]}</div>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -369,12 +410,14 @@ function Index() {
               {t.flowTitle}
             </h2>
 
-            <div className="home-flow__track">
+            <div className="home-flow__track" ref={flowTrackRef} style={flowTrackStyle}>
               {t.flowSteps.map((step, index) => (
                 <div key={step[0]} className="home-flow__step">
-                  <div className="home-flow__step-number">{String(index + 1).padStart(2, "0")}</div>
-                  <h3 className="home-flow__step-title">{step[0]}</h3>
-                  <p className="home-flow__step-copy">{step[1]}</p>
+                  <div className="home-flow__step-content">
+                    <div className="home-flow__step-number">{String(index + 1).padStart(2, "0")}</div>
+                    <h3 className="home-flow__step-title">{step[0]}</h3>
+                    <p className="home-flow__step-copy">{step[1]}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -385,9 +428,6 @@ function Index() {
           <div className="home-faq__inner">
             <div className="home-faq__header">
               <div className="home-faq__eyebrow">{t.faqEyebrow}</div>
-              <h2 className="home-faq__headline">
-                {t.faqTitle}
-              </h2>
             </div>
 
             <div className="home-faq__list">
@@ -411,9 +451,6 @@ function Index() {
               <h2 className="home-cta__headline">
                 {t.ctaTitle}
               </h2>
-              <p className="home-cta__copy">
-                {t.ctaCopy}
-              </p>
             </div>
 
             <div className="home-cta__details">

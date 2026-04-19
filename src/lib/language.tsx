@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
-export type LanguageCode = "nl" | "de";
+export type LanguageCode = "en" | "de";
 
 type LanguageContextValue = {
   lang: LanguageCode;
@@ -19,7 +19,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
     const stored = window.localStorage.getItem(STORAGE_KEY);
 
-    if (stored === "nl" || stored === "de") {
+    if (stored === "en" || stored === "de") {
       setLang(stored);
       return;
     }

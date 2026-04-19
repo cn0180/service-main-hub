@@ -4,63 +4,63 @@ import SiteFooter from "@/components/SiteFooter";
 import { useLanguage } from "@/lib/language";
 
 const cleaningServices = [
-  "Gebouwenreiniging",
-  "Basis-/regelmatige schoonmaak",
-  "Trappenhuisreiniging",
-  "Ramenreiniging",
-  "Hogedrukreiniging",
-  "Graffiti verwijdering",
+  "Building Cleaning",
+  "Basic / Regular Cleaning",
+  "Stairwell Cleaning",
+  "Window Cleaning",
+  "High-pressure Cleaning",
+  "Graffiti Removal",
 ] as const;
 
 const cleaningGroups = [
   {
-    label: "Binnen en dagelijks",
-    title: "Gebouwen, basis en trappenhuizen",
+    label: "Indoor and daily use",
+    title: "Buildings, regular cleaning and stairwells",
     copy:
-      "Voor entrees, algemene ruimtes en looproutes die elke dag gebruikt worden en daarom structureel schoon en verzorgd moeten blijven.",
+      "For entrances, shared areas and walkways that are used every day and must stay structurally clean and presentable.",
     items: [
-      "Gebouwenreiniging",
-      "Basis-/regelmatige schoonmaak",
-      "Trappenhuisreiniging",
+      "Building Cleaning",
+      "Basic / Regular Cleaning",
+      "Stairwell Cleaning",
     ],
   },
   {
-    label: "Glas en zichtlijnen",
-    title: "Ramenreiniging voor een sterke eerste indruk",
+    label: "Glass and visibility",
+    title: "Window cleaning for a strong first impression",
     copy:
-      "Voor glaspartijen, entrees en zichtbare gevelzones waar netheid direct meeweegt in hoe een pand wordt ervaren.",
-    items: ["Ramenreiniging"],
+      "For glass surfaces, entrances and visible facade zones where cleanliness directly affects how a property is perceived.",
+    items: ["Window Cleaning"],
   },
   {
-    label: "Buiten en herstel",
-    title: "Hogedrukreiniging en graffiti verwijdering",
+    label: "Outdoor and restoration",
+    title: "High-pressure cleaning and graffiti removal",
     copy:
-      "Voor harde oppervlakken en ongewenste vervuiling die een pand snel rommelig laten ogen als ze niet direct worden aangepakt.",
-    items: ["Hogedrukreiniging", "Graffiti verwijdering"],
+      "For hard surfaces and unwanted contamination that quickly makes a property look neglected when not handled directly.",
+    items: ["High-pressure Cleaning", "Graffiti Removal"],
   },
 ] as const;
 
 const cleaningApproach = [
   {
-    term: "Afstemming",
+    term: "Alignment",
     detail:
-      "We kijken naar gebruik, toegang, frequentie en aandachtspunten zodat schoonmaak past bij het ritme van het pand.",
+      "We look at usage, access, frequency and focus points so cleaning matches the property's daily rhythm.",
   },
   {
-    term: "Uitvoering",
+    term: "Execution",
     detail:
-      "Werkzaamheden worden netjes uitgevoerd met oog voor bewoners, bezoekers, medewerkers en dagelijkse doorloop.",
+      "Work is carried out neatly with attention to residents, visitors, staff and daily flow.",
   },
   {
-    term: "Opvolging",
+    term: "Follow-up",
     detail:
-      "Vervolgpunten, terugkerende momenten en zichtbare aandachtspunten blijven in een vaste lijn meegenomen.",
+      "Follow-up points, recurring moments and visible focus areas stay managed in one fixed line.",
   },
 ] as const;
 
 export const Route = createFileRoute("/schoonmaak")({
   head: () => ({
-    meta: [{ title: "NordAnker Service | Schoonmaak" }],
+    meta: [{ title: "NordAnker Service | Cleaning" }],
   }),
   component: CleaningPage,
 });
@@ -133,19 +133,19 @@ function CleaningPage() {
         ctaTitle: "Nimm Kontakt auf fuer Reinigung, die zum Rhythmus deiner Immobilie passt.",
       }
     : {
-        eyebrow: "Schoonmaak",
-        title: "Schoonmaak in een vaste lijn voor panden die zichtbaar op niveau moeten blijven.",
-        copy: "Geen losse onderdelen onder elkaar, maar een duidelijke aanpak voor binnenruimtes, glas, buitenvlakken en hardnekkige vervuiling.",
-        contact: "Contactpagina",
-        overviewEyebrow: "Wat we aanbieden",
-        overviewTitle: "Alles wat onder schoonmaak valt, overzichtelijk in een geheel.",
-        overviewCopy: "Voor entrees, trappenhuizen, algemene ruimtes, ramen en buitenvlakken die schoon, verzorgd en representatief moeten blijven in dagelijks gebruik.",
-        scopeEyebrow: "Waar het om gaat",
-        scopeTitle: "Niet zes losse secties, maar een schoonmaakpagina die laat zien wat je echt krijgt.",
-        approachEyebrow: "Hoe we werken",
-        approachTitle: "Schoonmaak die niet losstaat van planning, gebruik en uitstraling.",
-        ctaEyebrow: "Direct afstemmen",
-        ctaTitle: "Neem contact op voor schoonmaak die past bij het ritme van je pand.",
+        eyebrow: "Cleaning",
+        title: "Cleaning in one fixed line for properties that must remain visibly on standard.",
+        copy: "Not separate pieces under each other, but one clear approach for indoor areas, glass, outdoor surfaces and persistent contamination.",
+        contact: "Contact page",
+        overviewEyebrow: "What we offer",
+        overviewTitle: "Everything under cleaning, clearly shown in one overview.",
+        overviewCopy: "For entrances, stairwells, shared spaces, windows and outdoor surfaces that must stay clean and representative in daily use.",
+        scopeEyebrow: "What this covers",
+        scopeTitle: "Not six loose sections, but one cleaning page that shows what you actually get.",
+        approachEyebrow: "How we work",
+        approachTitle: "Cleaning that stays connected to planning, usage and appearance.",
+        ctaEyebrow: "Direct alignment",
+        ctaTitle: "Get in touch for cleaning that fits your property's rhythm.",
       };
 
   return (

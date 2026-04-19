@@ -5,7 +5,7 @@ import { useLanguage } from "@/lib/language";
 
 export const Route = createFileRoute("/privacybeleid")({
   head: () => ({
-    meta: [{ title: "NordAnker Service | Privacybeleid" }],
+    meta: [{ title: "NordAnker Service | Privacy Policy" }],
   }),
   component: PrivacybeleidPage,
 });
@@ -26,15 +26,15 @@ function PrivacybeleidPage() {
         ],
       }
     : {
-        eyebrow: "Privacybeleid",
-        title: "Duidelijkheid over hoe contactgegevens en aanvragen worden behandeld.",
-        copy: "NordAnker Service gebruikt gegevens alleen voor contact, planning, offertes en opvolging van werkzaamheden. We houden die verwerking praktisch, beperkt en gericht op de uitvoering van onze diensten.",
+        eyebrow: "Privacy Policy",
+        title: "Clear information on how contact data and requests are handled.",
+        copy: "NordAnker Service only uses data for contact, planning, quotes and work follow-up. We keep this processing practical, limited and focused on service delivery.",
         rows: [
-          ["Welke gegevens", "Naam, telefoonnummer, e-mailadres, bedrijfsgegevens, locatiegegevens en informatie die nodig is om een aanvraag, offerte of planning goed op te volgen."],
-          ["Waarvoor", "Voor contact over aanvragen, het maken van afspraken, het opstellen van offertes, het uitvoeren van werk en de terugkoppeling daarna."],
-          ["Bewaartermijn", "Gegevens worden niet langer bewaard dan nodig is voor administratie, communicatie, uitvoering van diensten en de wettelijke verplichtingen die daarbij horen."],
-          ["Delen van gegevens", "Gegevens worden alleen gedeeld wanneer dat nodig is voor uitvoering, administratie of een wettelijke verplichting. We verkopen geen persoonsgegevens aan derden."],
-          ["Contact over privacy", "Voor vragen over verwerking, inzage of correctie kun je contact opnemen via info@nordanker-service.de of +49 015510095242."],
+          ["Which data", "Name, phone number, e-mail address, company details, location details and information needed to process a request, quote or planning."],
+          ["Purpose", "For communication about requests, scheduling, quotes, execution of work and follow-up."],
+          ["Storage period", "Data is not stored longer than necessary for administration, communication, service execution and legal obligations."],
+          ["Data sharing", "Data is only shared when needed for execution, administration or legal obligation. We do not sell personal data to third parties."],
+          ["Privacy contact", "For questions about processing, access or correction, contact us via info@nordanker-service.de or +49 015510095242."],
         ],
       };
 

@@ -1,24 +1,15 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
-import { ChevronDown, Globe } from "lucide-react";
+import { ChevronDown, Clock3, Globe, Mail, Menu, PhoneCall, X } from "lucide-react";
 import { useLanguage } from "@/lib/language";
 
 const translations: Record<string, Record<string, string>> = {
-  nl: {
+  en: {
     Home: "Home",
-    Schoonmaak: "Schoonmaak",
-    Buitenonderhoud: "Buitenonderhoud",
-    Vastgoeddiensten: "Vastgoeddiensten",
+    Schoonmaak: "Cleaning",
+    Buitenonderhoud: "Outdoor Care",
+    Vastgoeddiensten: "Property Services",
     Contact: "Contact",
-    "Gebouwenreiniging": "Gebouwenreiniging",
-    "Basis-/regelmatige schoonmaak": "Basis-/regelmatige schoonmaak",
-    "Trappenhuisreiniging": "Trappenhuisreiniging",
-    "Ramenreiniging": "Ramenreiniging",
-    "Hogedrukreiniging": "Hogedrukreiniging",
-    "Graffiti verwijdering": "Graffiti verwijdering",
-    "Tuinonderhoud / boomverzorging": "Tuinonderhoud / boomverzorging",
-    "Winterdiensten": "Winterdiensten",
-    "Kleine reparaties": "Kleine reparaties",
   },
   de: {
     Home: "Startseite",
@@ -26,15 +17,6 @@ const translations: Record<string, Record<string, string>> = {
     Buitenonderhoud: "Außenpflege",
     Vastgoeddiensten: "Immobiliendienste",
     Contact: "Kontakt",
-    "Gebouwenreiniging": "Gebäudereinigung",
-    "Basis-/regelmatige schoonmaak": "Grund-/Unterhaltsreinigung",
-    "Trappenhuisreiniging": "Treppenhausreinigung",
-    "Ramenreiniging": "Fensterreinigung",
-    "Hogedrukreiniging": "Hochdruckreinigung",
-    "Graffiti verwijdering": "Graffitientfernung",
-    "Tuinonderhoud / boomverzorging": "Gartenpflege / Baumpflege",
-    "Winterdiensten": "Winterdienst",
-    "Kleine reparaties": "Kleinreparaturen",
   },
 };
 
@@ -47,7 +29,7 @@ const navItems = [
 ] as const;
 const languages = [
   { code: "de", label: "Deutsch" },
-  { code: "nl", label: "Nederlands" },
+  { code: "en", label: "English" },
 ] as const;
 
 function NavLine() {
@@ -66,6 +48,8 @@ function NavLine() {
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { lang, setLang } = useLanguage();
   const location = useLocation();
 
@@ -74,6 +58,30 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= 760);
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  useEffect(() => {
+    setMobileMenuOpen(false);
+    setLangOpen(false);
+  }, [location.pathname, location.hash]);
+
+  useEffect(() => {
+    if (!isMobile) {
+      document.body.style.overflow = "";
+      return;
+    }
+
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobile, mobileMenuOpen]);
 
   const t = (key: string) => translations[lang]?.[key] || key;
 
@@ -104,6 +112,319 @@ export default function Navbar() {
   };
 
   const currentLang = languages.find((l) => l.code === lang)!;
+  const mobileMenuOpenLabel = lang === "de" ? "Menue oeffnen" : "Open menu";
+  const mobileMenuCloseLabel = lang === "de" ? "Menue schliessen" : "Close menu";
+  const mobileContactLabel = lang === "de" ? "Direktkontakt" : "Direct contact";
+  const mobileHours = lang === "de" ? "Mo-Fr 08:00-18:00" : "Mon-Fri 08:00-18:00";
+  const mobileNavItems = navItems.filter((item) => item.name !== "Contact");
+
+  if (isMobile) {
+    return (
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 100,
+        }}
+      >
+        <div
+          style={{
+            background: scrolled
+              ? "linear-gradient(135deg, rgba(240,247,237,0.97) 0%, rgba(232,240,248,0.97) 100%)"
+              : "linear-gradient(135deg, rgba(248,252,247,0.98) 0%, rgba(243,247,252,0.98) 100%)",
+            backdropFilter: "blur(12px)",
+            transition: "all 0.35s ease",
+          }}
+        >
+          <div
+            style={{
+              height: "72px",
+              padding: "0 14px 0 10px",
+              display: "grid",
+              gridTemplateColumns: "1fr auto",
+              alignItems: "center",
+            }}
+          >
+            <Link to="/" viewTransition={location.pathname !== "/"}>
+              <img
+                src="/images/logo.png"
+                alt="NordAnker Hausmeister- & Reinigungsservice"
+                style={{
+                  height: "52px",
+                  width: "auto",
+                  display: "block",
+                }}
+              />
+            </Link>
+
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen((prev) => !prev)}
+              aria-label={mobileMenuOpen ? mobileMenuCloseLabel : mobileMenuOpenLabel}
+              style={{
+                width: "42px",
+                height: "42px",
+                borderRadius: "8px",
+                border: "1px solid rgba(30,58,95,0.14)",
+                background: "rgba(255,255,255,0.78)",
+                color: "#1e3a5f",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+              }}
+            >
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
+        </div>
+
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-hidden={!mobileMenuOpen}
+          style={{
+            position: "fixed",
+            top: "72px",
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(18,30,24,0.34)",
+            backdropFilter: "blur(4px)",
+            display: "flex",
+            justifyContent: "flex-end",
+            opacity: mobileMenuOpen ? 1 : 0,
+            pointerEvents: mobileMenuOpen ? "auto" : "none",
+            transition: "opacity 320ms ease",
+          }}
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          <div
+            style={{
+              width: "min(86vw, 340px)",
+              height: "calc(100dvh - 72px)",
+              background: "linear-gradient(180deg, #f7f9f4 0%, #eff5eb 100%)",
+              borderLeft: "1px solid rgba(32,58,47,0.12)",
+              boxShadow: "-20px 0 40px rgba(17,30,24,0.2)",
+              overflowY: "auto",
+              transform: mobileMenuOpen ? "translateX(0)" : "translateX(100%)",
+              transition: "transform 360ms cubic-bezier(0.22, 1, 0.36, 1)",
+              willChange: "transform",
+            }}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div style={{ minHeight: "100%", padding: "14px 16px 18px", display: "flex", flexDirection: "column" }}>
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <button
+                  type="button"
+                  onClick={() => setMobileMenuOpen(false)}
+                  aria-label={mobileMenuCloseLabel}
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                    borderRadius: "8px",
+                    border: "1px solid rgba(32,58,47,0.16)",
+                    background: "rgba(255,255,255,0.86)",
+                    color: "#203a2f",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  <X size={16} />
+                </button>
+              </div>
+
+              <div style={{ marginTop: "2px", display: "flex", justifyContent: "center" }}>
+                <Link to="/" viewTransition={location.pathname !== "/"} onClick={() => setMobileMenuOpen(false)}>
+                  <img
+                    src="/images/logo.png"
+                    alt="NordAnker Hausmeister- & Reinigungsservice"
+                    style={{
+                      height: "54px",
+                      width: "auto",
+                      display: "block",
+                    }}
+                  />
+                </Link>
+              </div>
+
+              <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-evenly" }}>
+                <nav style={{ display: "grid", gap: 0 }}>
+                  {mobileNavItems.map((item, index) => {
+                    const active = isActive(item.name);
+                    const linkStyle = {
+                      display: "block",
+                      textDecoration: "none",
+                      textAlign: "center" as const,
+                      fontSize: "22px",
+                      lineHeight: "1.1",
+                      fontWeight: 600,
+                      color: active ? "#5f8f4d" : "#203a2f",
+                    };
+
+                    return (
+                      <div key={item.name} style={{ display: "grid", gap: "14px", padding: "8px 0 12px" }}>
+                        {item.hash ? (
+                          <Link
+                            to="/"
+                            hash={item.hash}
+                            viewTransition={location.pathname !== "/"}
+                            onClick={() => setMobileMenuOpen(false)}
+                            style={linkStyle}
+                          >
+                            {t(item.name)}
+                          </Link>
+                        ) : (
+                          <Link
+                            to={item.to}
+                            viewTransition={location.pathname !== item.to}
+                            onClick={() => setMobileMenuOpen(false)}
+                            style={linkStyle}
+                          >
+                            {t(item.name)}
+                          </Link>
+                        )}
+
+                        {index < mobileNavItems.length - 1 ? (
+                          <div
+                            style={{
+                              width: "74%",
+                              height: "2px",
+                              justifySelf: "center",
+                              borderRadius: "999px",
+                              background:
+                                "linear-gradient(to right, rgba(95,143,77,0), rgba(95,143,77,0.42), rgba(32,58,47,0.34), rgba(95,143,77,0.42), rgba(95,143,77,0))",
+                            }}
+                          />
+                        ) : null}
+                      </div>
+                    );
+                  })}
+                </nav>
+
+                <Link
+                  to="/contact"
+                  viewTransition={location.pathname !== "/contact"}
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{
+                    marginTop: "20px",
+                    minHeight: "38px",
+                    padding: "0 14px",
+                    borderRadius: "8px",
+                    background: "#5f8f4d",
+                    color: "#f7f6f2",
+                    textDecoration: "none",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "15px",
+                    fontWeight: 600,
+                  }}
+                >
+                  {mobileContactLabel}
+                </Link>
+              </div>
+
+              <div style={{ marginTop: "auto" }}>
+                <div
+                  style={{
+                    marginTop: "12px",
+                    height: "1px",
+                    background: "linear-gradient(to right, transparent, rgba(32,58,47,0.3), transparent)",
+                  }}
+                />
+
+                <div style={{ marginTop: "10px", display: "grid", gap: "8px" }}>
+                  <a
+                    href="tel:+4915510095242"
+                    style={{
+                      textDecoration: "none",
+                      color: "#284638",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      fontSize: "14px",
+                      fontWeight: 500,
+                    }}
+                  >
+                    <PhoneCall size={14} />
+                    <span>+49 015510095242</span>
+                  </a>
+
+                  <a
+                    href="mailto:info@nordanker-service.de"
+                    style={{
+                      textDecoration: "none",
+                      color: "#284638",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      fontSize: "14px",
+                      fontWeight: 500,
+                    }}
+                  >
+                    <Mail size={14} />
+                    <span>info@nordanker-service.de</span>
+                  </a>
+
+                  <div
+                    style={{
+                      color: "#486456",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      fontSize: "13px",
+                      fontWeight: 500,
+                    }}
+                  >
+                    <Clock3 size={13} />
+                    <span>{mobileHours}</span>
+                  </div>
+                </div>
+
+                <div style={{ marginTop: "10px", display: "flex", gap: "8px" }}>
+                  {languages.map((l) => (
+                    <button
+                      key={l.code}
+                      type="button"
+                      onClick={() => setLang(l.code)}
+                      style={{
+                        minHeight: "30px",
+                        padding: "0 10px",
+                        borderRadius: "8px",
+                        border: "1px solid rgba(30,58,95,0.14)",
+                        background: lang === l.code ? "rgba(74,140,63,0.12)" : "rgba(255,255,255,0.72)",
+                        color: lang === l.code ? "#4a8c3f" : "#1e3a5f",
+                        fontSize: "12px",
+                        fontWeight: 600,
+                        cursor: "pointer",
+                      }}
+                    >
+                      {l.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          style={{
+            height: "3px",
+            background: scrolled
+              ? "linear-gradient(to right, rgba(95,143,77,0.04) 0%, rgba(95,143,77,0.48) 18%, rgba(24,48,38,0.36) 50%, rgba(95,143,77,0.48) 82%, rgba(95,143,77,0.04) 100%)"
+              : "linear-gradient(to right, rgba(95,143,77,0.03) 0%, rgba(95,143,77,0.34) 18%, rgba(24,48,38,0.28) 50%, rgba(95,143,77,0.34) 82%, rgba(95,143,77,0.03) 100%)",
+            transition: "background 0.4s ease",
+          }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div
