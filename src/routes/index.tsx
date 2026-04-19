@@ -199,7 +199,8 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const { lang } = useLanguage();
-  const t = lang === "de"
+  const normalizedLang = lang === "de" ? "de" : "en";
+  const t = normalizedLang === "de"
     ? {
         heroEyebrow: "Reinigung, Aussenpflege und Immobiliendienste",
         heroTitle: "Sauber, ordentlich und repraesentativ.",
@@ -254,9 +255,9 @@ function Index() {
         faqEyebrow: "FAQ",
         ctaTitle: "Ready for a clean environment?",
       };
-  const localizedServiceSections = serviceSections[lang];
-  const localizedFaqs = faqs[lang];
-  const localizedWhyPoints = whyPoints[lang];
+  const localizedServiceSections = serviceSections[normalizedLang];
+  const localizedFaqs = faqs[normalizedLang];
+  const localizedWhyPoints = whyPoints[normalizedLang];
   const flowTrackRef = useRef<HTMLDivElement | null>(null);
   const [flowProgress, setFlowProgress] = useState(0);
 

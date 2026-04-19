@@ -83,7 +83,8 @@ export default function Navbar() {
     };
   }, [isMobile, mobileMenuOpen]);
 
-  const t = (key: string) => translations[lang]?.[key] || key;
+  const normalizedLang = lang === "de" ? "de" : "en";
+  const t = (key: string) => translations[normalizedLang]?.[key] || key;
 
   const isActive = (name: string) => {
     const currentHash = location.hash ?? "";
@@ -111,11 +112,11 @@ export default function Navbar() {
     return false;
   };
 
-  const currentLang = languages.find((l) => l.code === lang)!;
-  const mobileMenuOpenLabel = lang === "de" ? "Menue oeffnen" : "Open menu";
-  const mobileMenuCloseLabel = lang === "de" ? "Menue schliessen" : "Close menu";
-  const mobileContactLabel = lang === "de" ? "Direktkontakt" : "Direct contact";
-  const mobileHours = lang === "de" ? "Mo-Fr 08:00-18:00" : "Mon-Fri 08:00-18:00";
+  const currentLang = languages.find((l) => l.code === normalizedLang)!;
+  const mobileMenuOpenLabel = normalizedLang === "de" ? "Menue oeffnen" : "Open menu";
+  const mobileMenuCloseLabel = normalizedLang === "de" ? "Menue schliessen" : "Close menu";
+  const mobileContactLabel = normalizedLang === "de" ? "Direktkontakt" : "Direct contact";
+  const mobileHours = normalizedLang === "de" ? "Mo-Fr 08:00-18:00" : "Mon-Fri 08:00-18:00";
   const mobileNavItems = navItems.filter((item) => item.name !== "Contact");
 
   if (isMobile) {
@@ -397,8 +398,8 @@ export default function Navbar() {
                         padding: "0 10px",
                         borderRadius: "8px",
                         border: "1px solid rgba(30,58,95,0.14)",
-                        background: lang === l.code ? "rgba(74,140,63,0.12)" : "rgba(255,255,255,0.72)",
-                        color: lang === l.code ? "#4a8c3f" : "#1e3a5f",
+                        background: normalizedLang === l.code ? "rgba(74,140,63,0.12)" : "rgba(255,255,255,0.72)",
+                        color: normalizedLang === l.code ? "#4a8c3f" : "#1e3a5f",
                         fontSize: "12px",
                         fontWeight: 600,
                         cursor: "pointer",
@@ -639,23 +640,23 @@ export default function Navbar() {
                       style={{
                         padding: "10px 18px",
                         fontSize: "14px",
-                        fontWeight: lang === l.code ? 600 : 400,
-                        color: lang === l.code ? "#4a8c3f" : "#1e3a5f",
+                        fontWeight: normalizedLang === l.code ? 600 : 400,
+                        color: normalizedLang === l.code ? "#4a8c3f" : "#1e3a5f",
                         cursor: "pointer",
                         display: "flex",
                         alignItems: "center",
                         gap: "10px",
                         transition: "background 0.2s ease, color 0.2s ease",
-                        backgroundColor: lang === l.code ? "rgba(74,140,63,0.08)" : "transparent",
+                        backgroundColor: normalizedLang === l.code ? "rgba(74,140,63,0.08)" : "transparent",
                       }}
                       onMouseEnter={(e) => {
-                        if (lang !== l.code) {
+                        if (normalizedLang !== l.code) {
                           e.currentTarget.style.backgroundColor = "rgba(74,140,63,0.06)";
                           e.currentTarget.style.color = "#4a8c3f";
                         }
                       }}
                       onMouseLeave={(e) => {
-                        if (lang !== l.code) {
+                        if (normalizedLang !== l.code) {
                           e.currentTarget.style.backgroundColor = "transparent";
                           e.currentTarget.style.color = "#1e3a5f";
                         }

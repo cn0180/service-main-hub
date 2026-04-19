@@ -8,8 +8,15 @@ type LanguageContextValue = {
 };
 
 const STORAGE_KEY = "nordanker-language-v2";
+const LEGACY_STORAGE_KEY = "nordanker-language";
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
+
+function normalizeLanguage(value: string | null): LanguageCode | null {
+  if (value === "de" || value === "en") return value;
+  if (value === "nl") return "de";
+  return null;
+}
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLang] = useState<LanguageCode>("de");
@@ -17,9 +24,10 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const stored = window.localStorage.getItem(STORAGE_KEY);
+    const stored = normalizeLanguage(window.localStorage.getItem(STORAGE_KEY))
+      ?? normalizeLanguage(window.localStorage.getItem(LEGACY_STORAGE_KEY));
 
-    if (stored === "en" || stored === "de") {
+    if (stored) {
       setLang(stored);
       return;
     }
@@ -30,6 +38,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (typeof window === "undefined") return;
     window.localStorage.setItem(STORAGE_KEY, lang);
+    window.localStorage.setItem(LEGACY_STORAGE_KEY, lang);
     document.documentElement.lang = lang;
   }, [lang]);
 
