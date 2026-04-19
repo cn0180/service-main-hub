@@ -28,8 +28,8 @@ const navItems = [
   { name: "Contact", to: "/contact" as const },
 ] as const;
 const languages = [
-  { code: "en", label: "English" },
   { code: "de", label: "Deutsch" },
+  { code: "en", label: "English" },
 ] as const;
 
 function NavLine() {
