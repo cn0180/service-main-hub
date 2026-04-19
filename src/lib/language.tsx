@@ -7,7 +7,7 @@ type LanguageContextValue = {
   setLang: (lang: LanguageCode) => void;
 };
 
-const STORAGE_KEY = "nordanker-language";
+const STORAGE_KEY = "nordanker-language-v2";
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
