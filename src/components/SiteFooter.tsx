@@ -12,9 +12,10 @@ function SiteFooter() {
         services: "Leistungen",
         why: "Warum NordAnker",
         workflow: "Ablauf",
-        availability: "Oeffnungszeiten",
+        availability: "Öffnungszeiten",
         privacy: "Datenschutz",
         policy: "Allgemeine Hinweise",
+        impressum: "Impressum",
         monFri: "Mo-Fr: 08:00-18:00",
         sat: "Sa: nach Vereinbarung",
       }
@@ -27,6 +28,7 @@ function SiteFooter() {
         availability: "Opening hours",
         privacy: "Privacy Policy",
         policy: "General Policy",
+        impressum: "Impressum",
         monFri: "Mon-Fri: 08:00-18:00",
         sat: "Sat: by appointment",
       };
@@ -85,6 +87,13 @@ function SiteFooter() {
             viewTransition={location.pathname !== "/algemeen-beleid"}
           >
             {t.policy}
+          </Link>
+          <Link
+            className="home-footer__bottom-link"
+            to="/impressum"
+            viewTransition={location.pathname !== "/impressum"}
+          >
+            {t.impressum}
           </Link>
         </div>
       </div>

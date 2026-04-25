@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SchoonmaakRouteImport } from './routes/schoonmaak'
 import { Route as PrivacybeleidRouteImport } from './routes/privacybeleid'
 import { Route as LinkmeRouteImport } from './routes/linkme'
+import { Route as ImpressumRouteImport } from './routes/impressum'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BuitenonderhoudRouteImport } from './routes/buitenonderhoud'
 import { Route as AlgemeenBeleidRouteImport } from './routes/algemeen-beleid'
@@ -30,6 +31,11 @@ const PrivacybeleidRoute = PrivacybeleidRouteImport.update({
 const LinkmeRoute = LinkmeRouteImport.update({
   id: '/linkme',
   path: '/linkme',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImpressumRoute = ImpressumRouteImport.update({
+  id: '/impressum',
+  path: '/impressum',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/algemeen-beleid': typeof AlgemeenBeleidRoute
   '/buitenonderhoud': typeof BuitenonderhoudRoute
   '/contact': typeof ContactRoute
+  '/impressum': typeof ImpressumRoute
   '/linkme': typeof LinkmeRoute
   '/privacybeleid': typeof PrivacybeleidRoute
   '/schoonmaak': typeof SchoonmaakRoute
@@ -67,6 +74,7 @@ export interface FileRoutesByTo {
   '/algemeen-beleid': typeof AlgemeenBeleidRoute
   '/buitenonderhoud': typeof BuitenonderhoudRoute
   '/contact': typeof ContactRoute
+  '/impressum': typeof ImpressumRoute
   '/linkme': typeof LinkmeRoute
   '/privacybeleid': typeof PrivacybeleidRoute
   '/schoonmaak': typeof SchoonmaakRoute
@@ -77,6 +85,7 @@ export interface FileRoutesById {
   '/algemeen-beleid': typeof AlgemeenBeleidRoute
   '/buitenonderhoud': typeof BuitenonderhoudRoute
   '/contact': typeof ContactRoute
+  '/impressum': typeof ImpressumRoute
   '/linkme': typeof LinkmeRoute
   '/privacybeleid': typeof PrivacybeleidRoute
   '/schoonmaak': typeof SchoonmaakRoute
@@ -88,6 +97,7 @@ export interface FileRouteTypes {
     | '/algemeen-beleid'
     | '/buitenonderhoud'
     | '/contact'
+    | '/impressum'
     | '/linkme'
     | '/privacybeleid'
     | '/schoonmaak'
@@ -97,6 +107,7 @@ export interface FileRouteTypes {
     | '/algemeen-beleid'
     | '/buitenonderhoud'
     | '/contact'
+    | '/impressum'
     | '/linkme'
     | '/privacybeleid'
     | '/schoonmaak'
@@ -106,6 +117,7 @@ export interface FileRouteTypes {
     | '/algemeen-beleid'
     | '/buitenonderhoud'
     | '/contact'
+    | '/impressum'
     | '/linkme'
     | '/privacybeleid'
     | '/schoonmaak'
@@ -116,6 +128,7 @@ export interface RootRouteChildren {
   AlgemeenBeleidRoute: typeof AlgemeenBeleidRoute
   BuitenonderhoudRoute: typeof BuitenonderhoudRoute
   ContactRoute: typeof ContactRoute
+  ImpressumRoute: typeof ImpressumRoute
   LinkmeRoute: typeof LinkmeRoute
   PrivacybeleidRoute: typeof PrivacybeleidRoute
   SchoonmaakRoute: typeof SchoonmaakRoute
@@ -142,6 +155,13 @@ declare module '@tanstack/react-router' {
       path: '/linkme'
       fullPath: '/linkme'
       preLoaderRoute: typeof LinkmeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/impressum': {
+      id: '/impressum'
+      path: '/impressum'
+      fullPath: '/impressum'
+      preLoaderRoute: typeof ImpressumRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -180,6 +200,7 @@ const rootRouteChildren: RootRouteChildren = {
   AlgemeenBeleidRoute: AlgemeenBeleidRoute,
   BuitenonderhoudRoute: BuitenonderhoudRoute,
   ContactRoute: ContactRoute,
+  ImpressumRoute: ImpressumRoute,
   LinkmeRoute: LinkmeRoute,
   PrivacybeleidRoute: PrivacybeleidRoute,
   SchoonmaakRoute: SchoonmaakRoute,
